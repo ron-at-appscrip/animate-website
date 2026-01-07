@@ -12,6 +12,9 @@ const AnimScreen: React.FC = () => {
   const img2Ref = useRef<HTMLImageElement>(null)
   const img3Ref = useRef<HTMLImageElement>(null)
   const scaleSlideRef = useRef<HTMLDivElement>(null)
+  const scaleSlideLeftRef = useRef<HTMLDivElement>(null)
+  const scaleSlideRightRef = useRef<HTMLDivElement>(null)
+  const whiteSplitRef = useRef<HTMLDivElement>(null)
   const rafId = useRef<number | undefined>(undefined)
 
   useEffect(() => {
@@ -116,15 +119,46 @@ const AnimScreen: React.FC = () => {
         }
       }
 
-      // Scale slide animation: Use clip-path like other clip-slides
+      // Scale slide animation: Split from center
       // Start after last clip path completes (p3 completes at: 1.5 + 0.4 + 0.25 = 2.15)
-      // Use same makeClip function and same duration as clip-slides
       const scaleSlideBase = scrollProgress - 2.15
-      const p4 = clamp01(scaleSlideBase / 0.25) // Same duration (0.25) as clip slides
       
+      // First reveal the scale-slide using clip-path
+      const revealProgress = clamp01(scaleSlideBase / 0.25)
       if (scaleSlideRef.current) {
-        // Use exact same clip-path reveal logic as clip-slides
-        scaleSlideRef.current.style.clipPath = makeClip(p4)
+        scaleSlideRef.current.style.clipPath = makeClip(revealProgress)
+      }
+
+      // Then split horizontally from center
+      // Split starts after reveal completes (at 0.25)
+      const splitStart = scaleSlideBase - 0.25
+      const splitAnimProgress = clamp01(Math.max(0, splitStart) / 0.3)
+      
+      // Add class to scale-slide when splitting starts
+      if (scaleSlideRef.current) {
+        if (splitAnimProgress > 0) {
+          scaleSlideRef.current.classList.add('is-splitting')
+        } else {
+          scaleSlideRef.current.classList.remove('is-splitting')
+        }
+      }
+      
+      // Calculate split distance (percentage of viewport width)
+      const splitDistance = splitAnimProgress * 50 // Max 50% each direction
+      
+      // Apply split transform to left and right halves
+      if (scaleSlideLeftRef.current) {
+        scaleSlideLeftRef.current.style.transform = `translateX(-${splitDistance}%)`
+      }
+      if (scaleSlideRightRef.current) {
+        scaleSlideRightRef.current.style.transform = `translateX(${splitDistance}%)`
+      }
+      
+      // White background div appears and expands in the middle
+      if (whiteSplitRef.current) {
+        const whiteWidth = splitAnimProgress * 100 // 0% to 100% width
+        whiteSplitRef.current.style.width = `${whiteWidth}%`
+        whiteSplitRef.current.style.opacity = `${splitAnimProgress}`
       }
 
       // Lottie positioning:
@@ -217,12 +251,30 @@ const AnimScreen: React.FC = () => {
           data-hide-hero=""
           style={{ 
             willChange: 'auto', 
-            clipPath: 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)'
+            clipPath: 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)',
+            position: 'relative',
+            overflow: 'hidden',
+            zIndex: 5,
+            height: '100%'
           }}
         >
           <div
+            ref={scaleSlideLeftRef}
             className="scale-slide-left"
-            style={{ willChange: 'auto', transform: 'translate(0px, 0px)' }}
+            style={{ 
+              willChange: 'auto', 
+              transform: 'translateX(0%)',
+              width: '50%',
+              height: '100%',
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              padding: '2rem'
+            }}
           >
             <h2 className="scale-title h1">
               We create camping experiences that evoke emotions. We give a new sense of adventure
@@ -231,6 +283,63 @@ const AnimScreen: React.FC = () => {
               exclusive camping adventure company specializing in&nbsp;luxury outdoor experiences and wilderness expeditions. seamlessly connecting adventurers with nature
             </p>
           </div>
+          <div
+            ref={scaleSlideRightRef}
+            className="scale-slide-right"
+            style={{ 
+              willChange: 'auto', 
+              transform: 'translateX(0%)',
+              width: '50%',
+              height: '100%',
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              padding: '2rem'
+            }}
+          >
+            <h2 className="scale-title h1">
+              We create camping experiences that evoke emotions. We give a new sense of adventure
+            </h2>
+            <p className="scale-description l1">
+              exclusive camping adventure company specializing in&nbsp;luxury outdoor experiences and wilderness expeditions. seamlessly connecting adventurers with nature
+            </p>
+          </div>
+        </div>
+        
+        {/* White background div that appears in the split */}
+        <div
+          ref={whiteSplitRef}
+          className="white-split-overlay side-overlay"
+          data-hide-hero=""
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: 0,
+            bottom: 0,
+            transform: 'translateX(-50%)',
+            width: '0%',
+            height: '100%',
+            backgroundColor: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            padding: '2rem',
+            opacity: 0,
+            zIndex: 15,
+            willChange: 'width, opacity'
+          }}
+        >
+          <h2 className="h1" style={{ color: '#000', marginBottom: '1rem', textAlign: 'center' }}>
+            Camp Adventures
+          </h2>
+          <p className="l1" style={{ color: '#000', textAlign: 'center', maxWidth: '500px' }}>
+            Discover the wilderness. Experience nature. Create memories that last forever.
+          </p>
         </div>
     </div>
   )

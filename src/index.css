@@ -2586,6 +2586,23 @@ html.lenis {
   width: 100% !important; /* Override base .scale-slide div width: 50% */
   position: relative;
 }
+
+/* Override for split animation */
+.hero-sticky .anim-screen .scale-slide.is-splitting .scale-slide-left {
+  width: 50% !important;
+  position: absolute !important;
+}
+
+.hero-sticky .anim-screen .scale-slide .scale-slide-right {
+  background-color: var(--c-red);
+  height: 100%;
+  position: absolute;
+}
+
+.hero-sticky .anim-screen .white-split-overlay {
+  left: 50% !important;
+  transform: translateX(-50%);
+}
 @media (max-width: 1023px) {
   .red-screen {
     transform: scale(.02, 0);
