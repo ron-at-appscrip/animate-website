@@ -11,8 +11,8 @@ function App() {
       <section className="hero-scroll">
         <div className="hero-sticky">
           <div className="full-screen-image">
-            <h1 id="first-heading" className="first-heading h1">
-              Fame Real Estate — where lifestyle becomes legacy
+            <h1 id="first-heading" className="first-heading h1" style={{textAlign: "center"}}>
+              Camp Adventures — where nature becomes your home
             </h1>
             <img
               src="https://i.pinimg.com/1200x/ac/46/18/ac4618d195b576be660970007b6b3506.jpg"

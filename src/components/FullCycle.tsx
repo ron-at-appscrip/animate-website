@@ -1,14 +1,14 @@
 import React from 'react'
 
 const FullCycle: React.FC = () => {
-  const steps = ['buy', 'sell', 'rent', 'invest', 'relocate']
+  const steps = ['explore', 'camp', 'hike', 'adventure', 'discover']
 
   return (
     <article 
       className="full-cycle" 
       style={{ transform: 'translate(0px, 0px)', willChange: 'transform' }}
     >
-      <p className="left-text l1-t">Full-cycle real estate services</p>
+      <p className="left-text l1-t">Full-cycle camping adventure services</p>
       <ul className="steps">
         {steps.map((step) => (
           <li key={step}>

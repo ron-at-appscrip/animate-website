@@ -176,7 +176,7 @@ const AnimScreen: React.FC = () => {
             ref={img1Ref}
             className="inner-img"
             role="presentation"
-            src="https://cdn.fame-estate.com/1_787ee4dae3_54280191fd.webp"
+            src="https://i.pinimg.com/1200x/8b/2b/19/8b2b19a00d8f1501ac5b78f883db24c0.jpg"
             style={{ willChange: 'auto', transform: 'scale(1, 1)' }}
           />
         </div>
@@ -191,7 +191,7 @@ const AnimScreen: React.FC = () => {
             ref={img2Ref}
             className="inner-img"
             role="presentation"
-            src="https://cdn.fame-estate.com/4_e4dd79658e_e0dc0c7570.webp"
+            src="https://i.pinimg.com/736x/94/ef/94/94ef9456e5c7759fd6409dec82d3caf9.jpg"
             style={{ willChange: 'auto', transform: 'scale(1, 1)' }}
           />
         </div>
@@ -206,7 +206,7 @@ const AnimScreen: React.FC = () => {
             ref={img3Ref}
             className="inner-img"
             role="presentation"
-            src="https://cdn.fame-estate.com/3_58be3bd3a5_5a7aefd99a.webp"
+            src="https://i.pinimg.com/736x/6d/f4/e3/6df4e37273addf107f8cb418ffebad43.jpg"
             style={{ willChange: 'auto', transform: 'scale(1, 1)' }}
           />
         </div>
@@ -225,10 +225,10 @@ const AnimScreen: React.FC = () => {
             style={{ willChange: 'auto', transform: 'translate(0px, 0px)' }}
           >
             <h2 className="scale-title h1">
-              We sell real estate that evokes emotions. We give a new sense of self
+              We create camping experiences that evoke emotions. We give a new sense of adventure
             </h2>
             <p className="scale-description l1">
-              exclusive real estate agency specializing in&nbsp;luxury residential and commercial properties. seamlessly connecting buyers and sellers
+              exclusive camping adventure company specializing in&nbsp;luxury outdoor experiences and wilderness expeditions. seamlessly connecting adventurers with nature
             </p>
           </div>
         </div>
