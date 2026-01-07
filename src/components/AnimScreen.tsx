@@ -331,13 +331,14 @@ const AnimScreen: React.FC = () => {
           className="behind-split-overlay side-overlay"
           data-hide-hero=""
           style={{
-            position: 'absolute',
+            position: 'fixed',
             left: '20px',
             right: '20px',
             top: 0,
             bottom: 0,
             width: 'auto',
-            height: '100%',
+            height: '100vh',
+            minHeight: '100vh',
             backgroundSize: 'cover',
             backgroundColor: 'white',
             backgroundPosition: 'center',
@@ -355,18 +356,31 @@ const AnimScreen: React.FC = () => {
           }}
         >
           <div style={{ 
-            backgroundColor: 'rgba(0, 0, 0, 0.6)', 
             padding: '3rem', 
             borderRadius: '1rem',
             textAlign: 'center',
-            maxWidth: '600px'
+            maxWidth: '400px',
+            color: '#000,',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginLeft: '40px'
           }}>
-            <h2 className="h1" style={{ color: '#fff', marginBottom: '1rem' }}>
-              Welcome to Camp Adventures
+            <h2 className="h1" style={{ 
+              color: '#000', 
+              marginBottom: '1rem', 
+              padding: '3rem',
+              fontFamily: "'Playfair Display', 'Times New Roman', Times, serif",
+              fontSize: '3rem',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              letterSpacing: '-0.096rem',
+              lineHeight: '3rem'
+            }}>
+              We create camping experiences that evoke emotions. We give a new sense of adventure
             </h2>
-            <p className="l1" style={{ color: '#fff', fontSize: '1.2rem' }}>
-              Experience the ultimate wilderness adventure. Join us for unforgettable camping experiences in nature's most beautiful locations.
-            </p>
+           
           </div>
         </div>
 
