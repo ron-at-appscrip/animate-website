@@ -15,6 +15,7 @@ const AnimScreen: React.FC = () => {
   const scaleSlideLeftRef = useRef<HTMLDivElement>(null)
   const scaleSlideRightRef = useRef<HTMLDivElement>(null)
   const whiteSplitRef = useRef<HTMLDivElement>(null)
+  const behindSplitRef = useRef<HTMLDivElement>(null)
   const rafId = useRef<number | undefined>(undefined)
 
   useEffect(() => {
@@ -144,7 +145,8 @@ const AnimScreen: React.FC = () => {
       }
       
       // Calculate split distance (percentage of viewport width)
-      const splitDistance = splitAnimProgress * 50 // Max 50% each direction
+      // Increased to 100% so slides move further left/right
+      const splitDistance = splitAnimProgress * 100 // Max 100% each direction
       
       // Apply split transform to left and right halves
       if (scaleSlideLeftRef.current) {
@@ -159,6 +161,21 @@ const AnimScreen: React.FC = () => {
         const whiteWidth = splitAnimProgress * 100 // 0% to 100% width
         whiteSplitRef.current.style.width = `${whiteWidth}%`
         whiteSplitRef.current.style.opacity = `${splitAnimProgress}`
+      }
+
+      // Behind split div - reveals as split happens (only when split starts)
+      if (behindSplitRef.current) {
+        if (splitAnimProgress > 0) {
+          const behindOpacity = 1 // Full opacity when visible
+          const behindScale = 0.8 + (splitAnimProgress * 0.2) // Start at 0.8, go to 1.0
+          behindSplitRef.current.style.opacity = `${behindOpacity}`
+          behindSplitRef.current.style.transform = `scale(${behindScale})`
+          behindSplitRef.current.style.visibility = 'visible'
+        } else {
+          behindSplitRef.current.style.opacity = '0'
+          behindSplitRef.current.style.visibility = 'hidden'
+          behindSplitRef.current.style.transform = 'scale(0.8)'
+        }
       }
 
       // Lottie positioning:
@@ -304,12 +321,55 @@ const AnimScreen: React.FC = () => {
             <h2 className="scale-title h1">
               We create camping experiences that evoke emotions. We give a new sense of adventure
             </h2>
-            <p className="scale-description l1">
-              exclusive camping adventure company specializing in&nbsp;luxury outdoor experiences and wilderness expeditions. seamlessly connecting adventurers with nature
-            </p>
+           
           </div>
         </div>
         
+        {/* New div that appears behind the split */}
+        <div
+          ref={behindSplitRef}
+          className="behind-split-overlay side-overlay"
+          data-hide-hero=""
+          style={{
+            position: 'absolute',
+            left: '20px',
+            right: '20px',
+            top: 0,
+            bottom: 0,
+            width: 'auto',
+            height: '100%',
+            backgroundSize: 'cover',
+            backgroundColor: 'white',
+            backgroundPosition: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            padding: '2rem',
+            opacity: 0,
+            visibility: 'hidden',
+            zIndex: 2,
+            willChange: 'opacity, transform',
+            transform: 'scale(0.8)',
+            transformOrigin: 'center center'
+          }}
+        >
+          <div style={{ 
+            backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+            padding: '3rem', 
+            borderRadius: '1rem',
+            textAlign: 'center',
+            maxWidth: '600px'
+          }}>
+            <h2 className="h1" style={{ color: '#fff', marginBottom: '1rem' }}>
+              Welcome to Camp Adventures
+            </h2>
+            <p className="l1" style={{ color: '#fff', fontSize: '1.2rem' }}>
+              Experience the ultimate wilderness adventure. Join us for unforgettable camping experiences in nature's most beautiful locations.
+            </p>
+          </div>
+        </div>
+
         {/* White background div that appears in the split */}
         <div
           ref={whiteSplitRef}
@@ -330,7 +390,7 @@ const AnimScreen: React.FC = () => {
             flexDirection: 'column',
             padding: '2rem',
             opacity: 0,
-            zIndex: 15,
+            zIndex: 0,
             willChange: 'width, opacity'
           }}
         >
